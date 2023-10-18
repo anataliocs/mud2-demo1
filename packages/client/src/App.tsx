@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import { useComponentValue } from "@latticexyz/react";
 import { useMUD } from "./MUDContext";
-import { singletonEntity } from "@latticexyz/store-sync/recs";
+import { singletonEntity, encodeEntity } from "@latticexyz/store-sync/recs";
+import { getComponentValueStrict } from "@latticexyz/recs";
+import { HistoryTable } from "./HistoryTable";
 
 export const App = () => {
   const {
-    components: { Counter },
+    components: { Counter, History },
     systemCalls: { increment },
   } = useMUD();
 
@@ -19,11 +22,19 @@ export const App = () => {
         type="button"
         onClick={async (event) => {
           event.preventDefault();
-          console.log("new counter value:", await increment());
+          let updatedCounter = await increment();
+          console.log("new counter value:", updatedCounter?.value);
         }}
       >
         Increment
       </button>
+
+      { counter?.value ? (
+            <div>
+              <HistoryTable counterValue={counter?.value}/>
+            </div>
+      ) : null
+      }
     </>
   );
 };
