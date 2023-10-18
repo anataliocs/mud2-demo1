@@ -8,7 +8,7 @@ import { HistoryTable } from "./HistoryTable";
 export const App = () => {
   const {
     components: { Counter, History },
-    systemCalls: { increment },
+    systemCalls: { increment, decrement },
   } = useMUD();
 
   const counter = useComponentValue(Counter, singletonEntity);
@@ -29,7 +29,23 @@ export const App = () => {
         Increment
       </button>
 
-      { counter?.value ? (
+      { counter?.value && counter.value > 0 ? (
+      <button
+        type="button"
+        onClick={async (event) => {
+          event.preventDefault();
+          if(counter?.value > 0) {
+            let updatedCounter = await decrement();
+            console.log("New counter value:", updatedCounter?.value);
+          }
+        }}
+      >
+        Decrement
+      </button>
+      ) : null 
+      }
+
+      { counter?.value && counter.value > 0 ? (
             <div>
               <HistoryTable counterValue={counter?.value}/>
             </div>

@@ -43,7 +43,13 @@ export function createSystemCalls(
     return getComponentValue(Counter, singletonEntity);
   };
 
+  const decrement = async () => {
+    const tx = await worldContract.write.decrement();
+    await waitForTransaction(tx);
+    return getComponentValue(Counter, singletonEntity);
+  };
+
   return {
-    increment,
+    increment, decrement
   };
 }
