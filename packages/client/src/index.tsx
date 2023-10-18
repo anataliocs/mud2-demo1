@@ -1,3 +1,5 @@
+import "./assets/main.css";
+
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { setup } from "./mud/setup";

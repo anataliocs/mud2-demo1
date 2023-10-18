@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import postcssNesting from 'postcss-nesting';
+import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
@@ -11,7 +13,14 @@ export default defineConfig({
   },
   build: {
     target: "es2022",
-    minify: true,
     sourcemap: true,
+  },
+
+  css: {
+    postcss: {
+      plugins: [
+        postcssNesting
+      ]
+    }
   },
 });
