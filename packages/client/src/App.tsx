@@ -6,7 +6,7 @@ import { HistoryTable } from "./HistoryTable";
 
 export const App = () => {
   const {
-    components: { Counter, History },
+    components: { Counter, History, ResourceOwner, ResourceBalance },
     systemCalls: { increment, decrement },
   } = useMUD();
 

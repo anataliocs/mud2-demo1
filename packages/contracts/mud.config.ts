@@ -15,5 +15,21 @@ export default mudConfig({
         time: "uint256",
       },
     },
+    ResourceOwner: {
+      keySchema: {
+        token: "uint256",
+      },
+      valueSchema: {
+        amount: "address",
+      },
+    },
+    ResourceBalance: {
+      keySchema: {
+        owner: "address",
+      },
+      valueSchema: {
+        amount: "uint256",
+      },
+    },
   },
 });
