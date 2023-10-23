@@ -7,7 +7,7 @@ import { HistoryTable } from "./HistoryTable";
 export const App = () => {
   const {
     components: { Counter, History, ResourceOwner, ResourceBalance },
-    systemCalls: { increment, decrement },
+    systemCalls: { increment, decrement, transferResource },
   } = useMUD();
 
   const counter = useComponentValue(Counter, singletonEntity);
@@ -48,6 +48,24 @@ export const App = () => {
               </button>
             ) : null
             }
+
+          </div>
+          <div p-4 items-center justify-center>
+
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 grid-rows-1 gap-1">
+          <div p-4 items-center justify-center>
+            <button
+              type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+              onClick={async (event) => {
+                event.preventDefault();
+                let transferResult = await transferResource(0n, "0xF761d0581103FBD226F299Da8dc70FdE3Bd00B89");
+              }}
+            >
+              Transfer
+            </button>
 
           </div>
           <div p-4 items-center justify-center>

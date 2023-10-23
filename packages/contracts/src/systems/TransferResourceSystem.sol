@@ -6,7 +6,7 @@ import { ResourceOwner } from "../codegen/index.sol";
 import { ResourceBalance } from "../codegen/index.sol";
  
 contract TransferResourceSystem is System {
-  function transfer(uint256 token, address to) public {
+  function transferResource(uint256 token, address to) public {
     address from = ResourceOwner.get(token);
     ResourceOwner.set(token, to);
     ResourceBalance.set(from, ResourceBalance.get(from) - 1);
