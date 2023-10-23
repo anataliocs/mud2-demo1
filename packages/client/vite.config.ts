@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import postcssNesting from 'postcss-nesting';
 import path from 'path'
+import tailwindcss from 'tailwindcss';
 
 export default defineConfig({
   plugins: [react()],
@@ -19,7 +20,7 @@ export default defineConfig({
   css: {
     postcss: {
       plugins: [
-        postcssNesting
+        tailwindcss
       ]
     }
   },
