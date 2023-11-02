@@ -9,8 +9,8 @@ import { Navbar } from "./Navbar";
 
 export const App = () => {
   const {
-    components: { Counter, History, ResourceOwner, ResourceBalance },
-    systemCalls: { increment, decrement, transferResource },
+    components: { Counter, History },
+    systemCalls: { increment, decrement, mintResource },
   } = useMUD();
 
   const counter = useComponentValue(Counter, singletonEntity);
@@ -68,20 +68,19 @@ export const App = () => {
 
           <div className="p-4 gap-2">
             <div className="grid grid-cols-4 grid-rows-1 gap-2">
-              <div className="p-4 items-center justify-center gap-2">
-                <button
+              <div p-4 items-center justify-center>
+              <button
                   type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
                   onClick={async (event) => {
                     event.preventDefault();
-                    let transferResult = await transferResource(0n, "");
+
+                    let createdResource = await mintResource(10n);
+                    console.log("New counter value:", createdResource);
+                    
                   }}
                 >
-                  Transfer
+                  Create Resource
                 </button>
-
-              </div>
-              <div p-4 items-center justify-center>
-
               </div>
             </div>
           </div>

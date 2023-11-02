@@ -29,7 +29,7 @@ export function createSystemCalls(
    *   syncToRecs (https://github.com/latticexyz/mud/blob/26dabb34321eedff7a43f3fcb46da4f3f5ba3708/templates/react/packages/client/src/mud/setupNetwork.ts#L39).
    */
   { worldContract, waitForTransaction }: SetupNetworkResult,
-  { Counter, ResourceOwner, ResourceBalance }: ClientComponents
+  { Counter, BasicResourceBalance }: ClientComponents
 ) {
   const increment = async () => {
     /*
@@ -49,13 +49,13 @@ export function createSystemCalls(
     return getComponentValue(Counter, singletonEntity); 
   };
 
-  const transferResource = async (token: bigint, address: string) => {
-    const tx = await worldContract.write.transferResource([token, address]);
+  const mintResource = async (amount: bigint) => {
+    const tx = await worldContract.write.mintResource([amount]);
     await waitForTransaction(tx);
-    return getComponentValue(ResourceOwner, singletonEntity); 
+    return getComponentValue(BasicResourceBalance, singletonEntity); 
   };
 
   return {
-    increment, decrement, transferResource
+    increment, decrement, mintResource
   };
 }

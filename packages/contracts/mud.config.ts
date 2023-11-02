@@ -1,6 +1,9 @@
 import { mudConfig } from "@latticexyz/world/register";
 
 export default mudConfig({
+  enums: {
+    BasicResourceType: ["WOOD", "STONE", "IRON", "GOLD"],
+  },
   tables: {
     Counter: {
       keySchema: {},
@@ -15,20 +18,14 @@ export default mudConfig({
         time: "uint256",
       },
     },
-    ResourceOwner: {
+    Player: "bool",
+    BasicResourceBalance: {
       keySchema: {
-        token: "uint256",
+        player: "bytes32",
       },
       valueSchema: {
-        amount: "address",
-      },
-    },
-    ResourceBalance: {
-      keySchema: {
-        owner: "address",
-      },
-      valueSchema: {
-        amount: "uint256",
+        resource: "BasicResourceType",
+        balance: "uint32",
       },
     },
   },
