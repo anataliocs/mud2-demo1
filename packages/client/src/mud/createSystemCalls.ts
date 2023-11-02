@@ -29,7 +29,7 @@ export function createSystemCalls(
    *   syncToRecs (https://github.com/latticexyz/mud/blob/26dabb34321eedff7a43f3fcb46da4f3f5ba3708/templates/react/packages/client/src/mud/setupNetwork.ts#L39).
    */
   { worldContract, waitForTransaction }: SetupNetworkResult,
-  { Counter, BasicResourceBalance, Player }: ClientComponents
+  { Counter, BasicResourceBalance, PlayerComponent, BasicResourceType }: ClientComponents
 ) {
   const increment = async () => {
     /*
@@ -52,7 +52,7 @@ export function createSystemCalls(
   const initPlayer = async () => {
     const tx = await worldContract.write.initPlayer();
     await waitForTransaction(tx);
-    return getComponentValue(Player, singletonEntity); 
+    return getComponentValue(PlayerComponent, singletonEntity); 
   };
 
   const mintResource = async (amount: bigint) => {

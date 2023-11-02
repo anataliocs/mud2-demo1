@@ -18,8 +18,8 @@ export default mudConfig({
         time: "uint256",
       },
     },
-    Player: "bool",
-    PlayerInventory: {
+    PlayerComponent: "bool",
+    PlayerInventoryComponent: {
       valueSchema: {
       resourceArray: "bytes32[4]"
       },

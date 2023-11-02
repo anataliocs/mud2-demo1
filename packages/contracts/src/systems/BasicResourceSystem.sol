@@ -2,7 +2,7 @@
 pragma solidity >=0.8.0;
  
 import { System } from "@latticexyz/world/src/System.sol";
-import { Counter, BasicResourceBalance, PlayerInventory, Player } from "../codegen/index.sol";
+import { Counter, BasicResourceBalance, PlayerInventoryComponent, PlayerComponent } from "../codegen/index.sol";
 import { addressToEntityKey } from "../addressToEntityKey.sol";
 import { BasicResourceType } from "../codegen/common.sol";
 import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
@@ -11,24 +11,24 @@ contract BasicResourceSystem is System {
 
   function initPlayer() public returns (bytes32) {
     bytes32 player = addressToEntityKey(address(_msgSender()));
-    require(!Player.get(player), "already spawned");
+    require(!PlayerComponent.get(player), "already spawned");
 
-    Player.set(player, true);
+    PlayerComponent.set(player, true);
 
     bytes32[4] memory inventoryArray;
-    PlayerInventory.set(player, inventoryArray);
+    PlayerInventoryComponent.set(player, inventoryArray);
 
     return player;
   }
 
   function mintResource(uint32 amount) public returns (bytes32) {
     bytes32 player = addressToEntityKey(address(_msgSender()));
-    require(Player.get(player), "Init player first");
+    require(PlayerComponent.get(player), "Init player first");
 
     BasicResourceType resourceType = pseudoRandomResource();
     uint256 index = uint256(resourceType);
 
-    bytes32 currentBalance = PlayerInventory.getItemResourceArray(player, index);
+    bytes32 currentBalance = PlayerInventoryComponent.getItemResourceArray(player, index);
     bytes32 key;
 
     if(currentBalance == 0x0000000000000000000000000000000000000000000000000000000000000000)
@@ -36,7 +36,7 @@ contract BasicResourceSystem is System {
       key = getUniqueEntity();
       BasicResourceBalance.set(key, player, pseudoRandomResource(), amount);
 
-      PlayerInventory.update(player, index, key);
+      PlayerInventoryComponent.update(player, index, key);
     }
     else {
       uint32 currentAmount = BasicResourceBalance.get(currentBalance).balance;
