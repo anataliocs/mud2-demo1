@@ -21,9 +21,10 @@ export default mudConfig({
     Player: "bool",
     BasicResourceBalance: {
       keySchema: {
-        player: "bytes32",
+        id: "bytes32",
       },
       valueSchema: {
+        player: "bytes32",
         resource: "BasicResourceType",
         balance: "uint32",
       },

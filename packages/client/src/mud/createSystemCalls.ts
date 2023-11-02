@@ -50,8 +50,10 @@ export function createSystemCalls(
   };
 
   const mintResource = async (amount: bigint) => {
-    const tx = await worldContract.write.mintResource([amount]);
+    const tx = await worldContract.write.increment();
     await waitForTransaction(tx);
+    const tx2 = await worldContract.write.mintResource([amount]);
+    await waitForTransaction(tx2);
     return getComponentValue(BasicResourceBalance, singletonEntity); 
   };
 

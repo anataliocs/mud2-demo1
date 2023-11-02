@@ -7,19 +7,32 @@ import { addressToEntityKey } from "../addressToEntityKey.sol";
 import { BasicResourceType } from "../codegen/common.sol";
  
 contract BasicResourceSystem is System {
-  function test() public returns (uint32) {
-    uint32 counter = Counter.get();
-    uint32 newValue = counter - 1;
-    Counter.set(newValue);
-    History.set(newValue, block.number, block.timestamp);
-    return newValue;
-  }
 
   function mintResource(uint32 amount) public returns (bytes32) {
 
-    bytes32 key = addressToEntityKey(msg.sender);
-    BasicResourceBalance.set(key, BasicResourceType.WOOD, amount);
+    bytes32 key = keccak256(abi.encode(block.number, block.timestamp, Counter.get()));
+    BasicResourceBalance.set(key, addressToEntityKey(msg.sender), pseudoRandomResource(), amount);
 
     return key;
+  }
+
+  function pseudoRandomResource() private view returns(BasicResourceType){
+        
+        uint pseudoRandomValue = (Counter.get() * block.number) % 4;
+
+        if(pseudoRandomValue == 0) {
+          return BasicResourceType.WOOD;
+        }
+        else if(pseudoRandomValue == 1) {
+          return BasicResourceType.STONE;
+        }
+        else if(pseudoRandomValue == 2) {
+          return BasicResourceType.IRON;
+        }
+        else if(pseudoRandomValue == 3) {
+          return BasicResourceType.GOLD;
+        }
+
+        return BasicResourceType.WOOD;
   }
 }
