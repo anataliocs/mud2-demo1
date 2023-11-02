@@ -5,12 +5,13 @@ import { System } from "@latticexyz/world/src/System.sol";
 import { Counter, History, HistoryData, BasicResourceBalance } from "../codegen/index.sol";
 import { addressToEntityKey } from "../addressToEntityKey.sol";
 import { BasicResourceType } from "../codegen/common.sol";
+import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
  
 contract BasicResourceSystem is System {
 
   function mintResource(uint32 amount) public returns (bytes32) {
 
-    bytes32 key = keccak256(abi.encode(block.number, block.timestamp, Counter.get()));
+    bytes32 key = getUniqueEntity();
     BasicResourceBalance.set(key, addressToEntityKey(msg.sender), pseudoRandomResource(), amount);
 
     return key;
