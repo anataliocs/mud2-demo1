@@ -19,6 +19,11 @@ export default mudConfig({
       },
     },
     Player: "bool",
+    PlayerInventory: {
+      valueSchema: {
+      resourceArray: "bytes32[4]"
+      },
+    },
     BasicResourceBalance: {
       keySchema: {
         id: "bytes32",

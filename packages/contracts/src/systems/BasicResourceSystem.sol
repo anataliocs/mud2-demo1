@@ -2,17 +2,46 @@
 pragma solidity >=0.8.0;
  
 import { System } from "@latticexyz/world/src/System.sol";
-import { Counter, History, HistoryData, BasicResourceBalance } from "../codegen/index.sol";
+import { Counter, BasicResourceBalance, PlayerInventory, Player } from "../codegen/index.sol";
 import { addressToEntityKey } from "../addressToEntityKey.sol";
 import { BasicResourceType } from "../codegen/common.sol";
 import { getUniqueEntity } from "@latticexyz/world-modules/src/modules/uniqueentity/getUniqueEntity.sol";
  
 contract BasicResourceSystem is System {
 
-  function mintResource(uint32 amount) public returns (bytes32) {
+  function initPlayer() public returns (bytes32) {
+    bytes32 player = addressToEntityKey(address(_msgSender()));
+    require(!Player.get(player), "already spawned");
 
-    bytes32 key = getUniqueEntity();
-    BasicResourceBalance.set(key, addressToEntityKey(msg.sender), pseudoRandomResource(), amount);
+    Player.set(player, true);
+
+    bytes32[4] memory inventoryArray;
+    PlayerInventory.set(player, inventoryArray);
+
+    return player;
+  }
+
+  function mintResource(uint32 amount) public returns (bytes32) {
+    bytes32 player = addressToEntityKey(address(_msgSender()));
+    require(Player.get(player), "Init player first");
+
+    BasicResourceType resourceType = pseudoRandomResource();
+    uint256 index = uint256(resourceType);
+
+    bytes32 currentBalance = PlayerInventory.getItemResourceArray(player, index);
+    bytes32 key;
+
+    if(currentBalance == 0x0000000000000000000000000000000000000000000000000000000000000000)
+    {
+      key = getUniqueEntity();
+      BasicResourceBalance.set(key, player, pseudoRandomResource(), amount);
+
+      PlayerInventory.update(player, index, key);
+    }
+    else {
+      uint32 currentAmount = BasicResourceBalance.get(currentBalance).balance;
+      BasicResourceBalance.setBalance(currentBalance, currentAmount + amount);
+    }
 
     return key;
   }

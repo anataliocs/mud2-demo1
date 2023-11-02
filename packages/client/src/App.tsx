@@ -10,7 +10,7 @@ import { Navbar } from "./Navbar";
 export const App = () => {
   const {
     components: { Counter, History },
-    systemCalls: { increment, decrement, mintResource },
+    systemCalls: { increment, decrement, mintResource, initPlayer },
   } = useMUD();
 
   const counter = useComponentValue(Counter, singletonEntity);
@@ -28,7 +28,27 @@ export const App = () => {
       </header>
 
       <main>
+
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+
+        <div className="p-4 gap-2">
+            <div className="grid grid-cols-4 grid-rows-1 gap-2">
+              <div p-4 items-center justify-center>
+              <button
+                  type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+                  onClick={async (event) => {
+                    event.preventDefault();
+
+                    let createdResource = await initPlayer();
+                    console.log("Player:", createdResource);
+                    
+                  }}
+                >
+                  Create Player
+                </button>
+              </div>
+            </div>
+        </div>
 
           <div>
             Counter: <span>{counter?.value ?? "??"}</span>
