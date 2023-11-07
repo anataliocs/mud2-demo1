@@ -26,7 +26,7 @@ contract BasicResourceSystem is System {
     require(PlayerComponent.get(player), "Init player first");
 
     BasicResourceType resourceType = pseudoRandomResource();
-    uint256 index = uint256(resourceType);
+    uint256 index = uint256(resourceType); 
 
     bytes32 currentBalance = PlayerInventoryComponent.getItemResourceArray(player, index);
     bytes32 key;
