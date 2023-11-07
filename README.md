@@ -1,5 +1,12 @@
 # mud2-demo1
 
+Demo application demonstrating various uses of store, systems and querying ECS data with recs.
+
+Built with:
+- Solidity
+- MUD 2.0
+- React
+- Tailwind
 
 ## Run Application
 
