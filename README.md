@@ -1,4 +1,4 @@
-# mud2-demo1
+# MUD 2.0 Web3 dApp Game Demo
 
 Demo application demonstrating various uses of store, systems and querying ECS data with recs.
 
@@ -10,6 +10,7 @@ Built with:
 
 ## Run Application
 
+Build and execute:
 ```
 pnpm dev
 ```
