@@ -18,6 +18,12 @@ pnpm dev
 Navigate to:  http://localhost:3000/
 
 
+## Application Components
+
+- PlayerInventoryComponent
+- PlayerComponent
+- BasicResourceBalance
+
 ## Deployment steps
 
 https://mud.dev/tutorials/minimal/deploy
